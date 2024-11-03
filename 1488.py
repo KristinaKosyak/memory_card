@@ -44,14 +44,42 @@ def select_random_question():
     return question
 
 def check_answer():
-    if btn_answer3.isChecked():
+    selected_answer = None
+
+    if btn_answer1.isChecked():
+        selected_answer = 1
+    elif btn_answer2.isChecked():
+        selected_answer = 2
+    elif btn_answer3.isChecked():
+        selected_answer = 3
+    elif btn_answer4.isChecked():
+        selected_answer = 4
+
+    if selected_answer == correct_answer_index:
         QMessageBox.information(main_win, 'результат', 'Відповідь вірна')
     else:
         QMessageBox.information(main_win, 'результат', 'Обери іншу відповідь')
 
+correct_answer_index = None
+
 
 def change_questions():
-    pass
+    global correct_answer_index
+
+    question_data = select_random_question()
+
+    if question_data:  # Використовуємо question_data замість question
+        question.setText(question_data[1])
+        btn_answer1.setText(question_data[2])
+        btn_answer2.setText(question_data[3])
+        btn_answer3.setText(question_data[4])
+        btn_answer4.setText(question_data[5])
+
+        correct_answer_index = question_data[6]
+    else:
+        QMessageBox.information(main_win, 'Помилка', 'Немає доступних питань у базі даних.')
+
+
 
 
 def add_question():
